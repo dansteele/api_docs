@@ -15,11 +15,10 @@ set :markdown,
     renderer: UniqueHeadCounter
 
 # Assets
-prefix = "#{ENV['RAILS_ENV'] == 'production' ? 'api_docs/' : ''}"
-set :css_dir, "#{prefix}stylesheets"
-set :js_dir, "#{prefix}javascripts"
-set :images_dir, "#{prefix}images"
-set :fonts_dir, "#{prefix}fonts"
+set :css_dir, "stylesheets"
+set :js_dir, "javascripts"
+set :images_dir, "images"
+set :fonts_dir, "fonts"
 
 # Activate the syntax highlighter
 activate :syntax
