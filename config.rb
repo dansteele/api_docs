@@ -15,10 +15,11 @@ set :markdown,
     renderer: UniqueHeadCounter
 
 # Assets
-set :css_dir, 'stylesheets'
-set :js_dir, 'javascripts'
-set :images_dir, 'images'
-set :fonts_dir, 'fonts'
+prefix = "#{ENV['RAILS_ENV'] == 'production' ? 'api_docs/' : ''}"
+set :css_dir, "#{prefix}stylesheets"
+set :js_dir, "#{prefix}javascripts"
+set :images_dir, "#{prefix}images"
+set :fonts_dir, "#{prefix}fonts"
 
 # Activate the syntax highlighter
 activate :syntax
@@ -26,6 +27,7 @@ ready do
   require './lib/multilang.rb'
 end
 
+activate :livereload
 activate :sprockets
 
 activate :autoprefixer do |config|
@@ -45,8 +47,8 @@ configure :build do
   activate :minify_css
   activate :minify_javascript
   # activate :relative_assets
-  # activate :asset_hash
-  # activate :gzip
+  activate :asset_hash
+  activate :gzip
 end
 
 # Deploy Configuration
