@@ -1,13 +1,12 @@
 ---
-title: eola API reference
+title: eola API
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
   - ruby
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
+  - <a href='mailto:hello@eola.co.uk'>Ask us for a developer key</a>
 
 includes:
   - errors
@@ -15,123 +14,120 @@ includes:
 search: true
 ---
 
+<!-- # frozen_string_literal: true
+
+class PublicApi < ApplicationController
+
+  before_action :authenticate_integrated_partner!
+  before_action :add_request_to_integrated_partner
+
+  private
+
+  def authenticate_integrated_partner!
+    @integrated_partner = IntegratedPartner
+      .find_by(token: request.headers['Authorization'])
+    :abort unless @integrated_partner
+  end
+
+  def add_request_to_integrated_partner
+    @integrated_partner.increment!(:requests_made)
+  end
+
+end
+ -->
+
+
+
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the eola API!
+This API will allow you to integrate with eola and the businesses busing eola.
+You'll be able to get the latest business, time slot and booking information.
+Looking to make bookings entirely via the API? That's possible too!
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
 # Authentication
 
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
+> To authorize, pass your authorization token as an Authorization header:
 
 ```shell
 # With shell, you can just pass the correct header with each request
 curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+  -H "Authorization: your_api_key"
 ```
 
-```javascript
-const kittn = require('kittn');
+> Make sure to replace `your_api_key` with your API key.
 
-let api = kittn.authorize('meowmeowmeow');
-```
+eola uses API keys to allow access to the API.
+If you haven't already, [ask us for a developer key](mailto:hello@eola.co.uk).
 
-> Make sure to replace `meowmeowmeow` with your API key.
+eola expects for the API key to be included in all API requests to the server
+in a header that looks like the following:
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
+`Authorization: your_api_key`
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+  You must replace <code>your_api_key</code> with your personal API key,
+  which follows a standard UUID format.
 </aside>
 
-# Kittens
+# Outlets
 
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+## Retrieve An Outlet
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+curl "https://eola.co.uk/public_api/outlets/1"
+  -H "Authorization: your_api_key"
 ```
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
 
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
+{  
+  "name": "Waffle",
+  "description": null,
+  "updated_at": "2018-10-25T12:32:34.844Z",
+  "slug": "waffle",
+  "minimum_notice_hrs": 24,
+  "link_to_site":  "https://eola.co.uk",
+  "phone_number": "01231 231214",
+  "child_age": 16,
+  "default_currency": "gbp",
+  "address": {  
+    "id": 406,
+    "street_name": "Green Lanes",
+    "city": "London",
+    "country": "GB",
+    "post_code": "N4 1AJ",
+    "created_at": "2018-03-29T18:47:52.923Z",
+    "updated_at": "2018-03-29T18:47:52.923Z",
+    "latitude": 51.5803495,
+    "longitude": -0.099535,
+    "building_name": "475"
   },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+  "profile_picture":"image/upload/v1522917781/eola/profile_pictures/1522917780waffle.jpg"
+}
 ```
 
-This endpoint retrieves all kittens.
+This endpoint retrieves the information for a given outlet.
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`GET https://eola.co.uk/public_api/outlets/1`
 
 ### Query Parameters
 
 Parameter | Default | Description
 --------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+include_offers | false | Should the result also include offers.
+include_cancellation_policy | false | Should the result include cancellation policy information. Note that all outlets fall back to a default, generic policy if they have not set one themselves.
 
 <aside class="success">
 Remember — a happy kitten is an authenticated kitten!
 </aside>
 
-## Get a Specific Kitten
+<!-- ## Get a Specific Kitten
 
 ```ruby
 require 'kittn'
@@ -233,4 +229,4 @@ This endpoint deletes a specific kitten.
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to delete
+ID | The ID of the kitten to delete -->
