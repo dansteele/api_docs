@@ -3,7 +3,6 @@ title: eola API
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - ruby
 
 toc_footers:
   - <a href='mailto:hello@eola.co.uk'>Ask us for a developer key</a>
@@ -13,30 +12,6 @@ includes:
 
 search: true
 ---
-
-<!-- # frozen_string_literal: true
-
-class PublicApi < ApplicationController
-
-  before_action :authenticate_integrated_partner!
-  before_action :add_request_to_integrated_partner
-
-  private
-
-  def authenticate_integrated_partner!
-    @integrated_partner = IntegratedPartner
-      .find_by(token: request.headers['Authorization'])
-    :abort unless @integrated_partner
-  end
-
-  def add_request_to_integrated_partner
-    @integrated_partner.increment!(:requests_made)
-  end
-
-end
- -->
-
-
 
 # Introduction
 
@@ -61,7 +36,7 @@ curl "api_endpoint_here"
 eola uses API keys to allow access to the API.
 If you haven't already, [ask us for a developer key](mailto:hello@eola.co.uk).
 
-eola expects for the API key to be included in all API requests to the server
+eola expects for the API key to be included in **all** API requests to the server
 in a header that looks like the following:
 
 `Authorization: your_api_key`
@@ -76,7 +51,7 @@ in a header that looks like the following:
 ## Retrieve An Outlet
 
 ```shell
-curl "https://eola.co.uk/public_api/outlets/1"
+curl "https://eola.co.uk/api/outlets/perranporth-surf-school"
   -H "Authorization: your_api_key"
 ```
 
@@ -84,29 +59,41 @@ curl "https://eola.co.uk/public_api/outlets/1"
 > The above command returns JSON structured like this:
 
 ```json
-{  
-  "name": "Waffle",
+{
   "description": null,
-  "updated_at": "2018-10-25T12:32:34.844Z",
-  "slug": "waffle",
+  "updated_at": "2018-10-25T12:32:34.678Z",
+  "slug": "perranporth-surf-school",
   "minimum_notice_hrs": 24,
-  "link_to_site":  "https://eola.co.uk",
-  "phone_number": "01231 231214",
+  "link_to_site": "https://www.perranporthsurfschool.co.uk",
+  "phone_number": "+447974550823",
   "child_age": 16,
   "default_currency": "gbp",
-  "address": {  
-    "id": 406,
-    "street_name": "Green Lanes",
-    "city": "London",
-    "country": "GB",
-    "post_code": "N4 1AJ",
-    "created_at": "2018-03-29T18:47:52.923Z",
-    "updated_at": "2018-03-29T18:47:52.923Z",
-    "latitude": 51.5803495,
-    "longitude": -0.099535,
-    "building_name": "475"
+  "profile_picture": {
+    "thumb": "https://res.cloudinary.com/eola/image/...",
+    "fb_friendly": "https://res.cloudinary.com/eola/image/...",
+    "wide": "https://res.cloudinary.com/eola/image/...",
+    "fullscreen": "https://res.cloudinary.com/eola/image/...",
+    "large": "https://res.cloudinary.com/eola/image/...",
+    "square": "https://res.cloudinary.com/eola/image/...",
+    "preview": "https://res.cloudinary.com/eola/image/...",
+    "profile_card": "https://res.cloudinary.com/eola/image/...",
+    "tiny_profile_pic": "https://res.cloudinary.com/eola/image/...g"
   },
-  "profile_picture":"image/upload/v1522917781/eola/profile_pictures/1522917780waffle.jpg"
+  "cancellation_policy": {
+    "name": "not_set"
+  },
+  "address": {
+    "id": 434,
+    "street_name": "19 St. Piran’s Road",
+    "city": "Perranporth",
+    "country": "GB",
+    "post_code": "TR60DE",
+    "created_at": "2018-10-15T15:44:23.443Z",
+    "updated_at": "2018-10-15T15:44:23.443Z",
+    "latitude": 50.345734,
+    "longitude": -5.15174,
+    "building_name": "Bathsheba Surf"
+  }
 }
 ```
 
@@ -114,17 +101,19 @@ This endpoint retrieves the information for a given outlet.
 
 ### HTTP Request
 
-`GET https://eola.co.uk/public_api/outlets/1`
+`GET https://eola.co.uk/api/outlets/perranporth-surf-school`
 
-### Query Parameters
 
-Parameter | Default | Description
+### Response notes
+Field | Note
 --------- | ------- | -----------
-include_offers | false | Should the result also include offers.
-include_cancellation_policy | false | Should the result include cancellation policy information. Note that all outlets fall back to a default, generic policy if they have not set one themselves.
+description | Rich text field.
+cancellation_policy  |  When the `name` value is `custom`, then `custom_text` fields will also be sent. These will be in rich text.
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+<aside class="warning">
+  The majority of this information is set by the customer and can change without warning.
+  We will cache your request for you for optimal response times, but caching this information
+  yourself will need careful consideration.
 </aside>
 
 <!-- ## Get a Specific Kitten
