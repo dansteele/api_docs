@@ -201,7 +201,7 @@
       <script src="javascripts/all-c5541673.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -212,7 +212,6 @@
       <img src="https://res.cloudinary.com/eola/image/upload/q_auto,f_auto/v1/eola/public_images/eola-logo" class="logo" alt="Eola logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -244,28 +243,7 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <!-- # frozen_string_literal: true
-
-class PublicApi < ApplicationController
-
-  before_action :authenticate_integrated_partner!
-  before_action :add_request_to_integrated_partner
-
-  private
-
-  def authenticate_integrated_partner!
-    @integrated_partner = IntegratedPartner
-      .find_by(token: request.headers['Authorization'])
-    :abort unless @integrated_partner
-  end
-
-  def add_request_to_integrated_partner
-    @integrated_partner.increment!(:requests_made)
-  end
-
-end
- -->
-<h1 id='introduction'>Introduction</h1>
+        <h1 id='introduction'>Introduction</h1>
 <p>Welcome to the eola API!
 This API will allow you to integrate with eola and the businesses busing eola.
 You&#39;ll be able to get the latest business, time slot and booking information.
@@ -285,7 +263,7 @@ curl <span class="s2">"api_endpoint_here"</span>
 <p>eola uses API keys to allow access to the API.
 If you haven&#39;t already, <a href="mailto:hello@eola.co.uk">ask us for a developer key</a>.</p>
 
-<p>eola expects for the API key to be included in all API requests to the server
+<p>eola expects for the API key to be included in <strong>all</strong> API requests to the server
 in a header that looks like the following:</p>
 
 <p><code>Authorization: your_api_key</code></p>
@@ -294,62 +272,73 @@ in a header that looks like the following:</p>
   You must replace <code>your_api_key</code> with your personal API key,
   which follows a standard UUID format.
 </aside>
-<h1 id='outlets'>Outlets</h1><h2 id='retrieve-an-outlet'>Retrieve An Outlet</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://eola.co.uk/public_api/outlets/1"</span>
+<h1 id='outlets'>Outlets</h1><h2 id='retrieve-an-outlet'>Retrieve An Outlet</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://eola.co.uk/api/outlets/perranporth-surf-school"</span>
   -H <span class="s2">"Authorization: your_api_key"</span>
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Waffle"</span><span class="p">,</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-25T12:32:34.844Z"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"waffle"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-25T12:32:34.678Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"perranporth-surf-school"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"minimum_notice_hrs"</span><span class="p">:</span><span class="w"> </span><span class="mi">24</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"link_to_site"</span><span class="p">:</span><span class="w">  </span><span class="s2">"https://eola.co.uk"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01231 231214"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"link_to_site"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.perranporthsurfschool.co.uk"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+447974550823"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"child_age"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
   </span><span class="s2">"default_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gbp"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">406</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"street_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Green Lanes"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"London"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GB"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"post_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"N4 1AJ"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-03-29T18:47:52.923Z"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-03-29T18:47:52.923Z"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">51.5803495</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.099535</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"building_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"475"</span><span class="w">
+  </span><span class="s2">"profile_picture"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/eola/image/..."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"fb_friendly"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/eola/image/..."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"wide"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/eola/image/..."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"fullscreen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/eola/image/..."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"large"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/eola/image/..."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"square"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/eola/image/..."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"preview"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/eola/image/..."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"profile_card"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/eola/image/..."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tiny_profile_pic"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://res.cloudinary.com/eola/image/...g"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"profile_picture"</span><span class="p">:</span><span class="s2">"image/upload/v1522917781/eola/profile_pictures/1522917780waffle.jpg"</span><span class="w">
+  </span><span class="s2">"cancellation_policy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"not_set"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">434</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"street_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"19 St. Piran’s Road"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Perranporth"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GB"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"post_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TR60DE"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-15T15:44:23.443Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-15T15:44:23.443Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">50.345734</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-5.15174</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"building_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bathsheba Surf"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves the information for a given outlet.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>GET https://eola.co.uk/public_api/outlets/1</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
+<p><code>GET https://eola.co.uk/api/outlets/perranporth-surf-school</code></p>
+<h3 id='response-notes'>Response notes</h3>
 <table><thead>
 <tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
+<th>Field</th>
+<th>Note</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_offers</td>
-<td>false</td>
-<td>Should the result also include offers.</td>
+<td>description</td>
+<td>Rich text field.</td>
 </tr>
 <tr>
-<td>include_cancellation_policy</td>
-<td>false</td>
-<td>Should the result include cancellation policy information. Note that all outlets fall back to a default, generic policy if they have not set one themselves.</td>
+<td>cancellation_policy</td>
+<td>When the <code>name</code> value is <code>custom</code>, then <code>custom_text</code> fields will also be sent. These will be in rich text.</td>
 </tr>
 </tbody></table>
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+<aside class="warning">
+  The majority of this information is set by the customer and can change without warning.
+  We will cache your request for you for optimal response times, but caching this information
+  yourself will need careful consideration.
 </aside>
 
 <!-- ## Get a Specific Kitten
@@ -514,7 +503,6 @@ ID | The ID of the kitten to delete -->
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
           </div>
       </div>
     </div>
