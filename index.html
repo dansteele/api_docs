@@ -230,6 +230,9 @@
                   <li>
                     <a href="#retrieve-an-outlet" class="toc-h2 toc-link" data-title="Retrieve An Outlet">Retrieve An Outlet</a>
                   </li>
+                  <li>
+                    <a href="#get-all-outlets" class="toc-h2 toc-link" data-title="Get all outlets">Get all outlets</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -248,6 +251,12 @@
 This API will allow you to integrate with eola and the businesses busing eola.
 You&#39;ll be able to get the latest business, time slot and booking information.
 Looking to make bookings entirely via the API? That&#39;s possible too!</p>
+
+<aside class="notice">
+  The majority of this information is set by the customer and can change without warning.
+  We will cache your request for you for optimal response times, but caching this information
+  yourself will need careful consideration.
+</aside>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
 <p>To authorize, pass your authorization token as an Authorization header:</p>
@@ -302,7 +311,6 @@ in a header that looks like the following:</p>
     </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"not_set"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">434</span><span class="p">,</span><span class="w">
     </span><span class="s2">"street_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"19 St. Piran’s Road"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Perranporth"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GB"</span><span class="p">,</span><span class="w">
@@ -318,28 +326,56 @@ in a header that looks like the following:</p>
 <p>This endpoint retrieves the information for a given outlet.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>GET https://eola.co.uk/api/outlets/perranporth-surf-school</code></p>
-<h3 id='response-notes'>Response notes</h3>
+
+<aside class="notice">
+  When the <code>cancellation_policy.name</code> value is <code>custom</code>, then <code>custom_text</code> fields will also be sent. These will be in rich text.
+</aside>
+<h2 id='get-all-outlets'>Get all outlets</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://eola.co.uk/api/outlets"</span>
+  -H <span class="s2">"Authorization: your_api_key"</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-25T12:32:34.678Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"perranporth-surf-school"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"minimum_notice_hrs"</span><span class="p">:</span><span class="w"> </span><span class="mi">24</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"link_to_site"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.perranporthsurfschool.co.uk"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+447974550823"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"child_age"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"default_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gbp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"profile_picture"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="err">...</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"cancellation_policy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"not_set"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="err">...</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="err">...</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves the information for a given outlet.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>GET https://eola.co.uk/api/outlets</code></p>
+<h3 id='request-options'>Request options</h3>
 <table><thead>
 <tr>
-<th>Field</th>
-<th>Note</th>
+<th>Option</th>
+<th>Default</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>description</td>
-<td>Rich text field.</td>
-</tr>
-<tr>
-<td>cancellation_policy</td>
-<td>When the <code>name</code> value is <code>custom</code>, then <code>custom_text</code> fields will also be sent. These will be in rich text.</td>
+<td>bookable_only</td>
+<td>false</td>
+<td>Only return the outlets which have bookable time slots available.</td>
 </tr>
 </tbody></table>
-
-<aside class="warning">
-  The majority of this information is set by the customer and can change without warning.
-  We will cache your request for you for optimal response times, but caching this information
-  yourself will need careful consideration.
-</aside>
 
 <!-- ## Get a Specific Kitten
 
