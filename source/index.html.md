@@ -20,6 +20,12 @@ This API will allow you to integrate with eola and the businesses busing eola.
 You'll be able to get the latest business, time slot and booking information.
 Looking to make bookings entirely via the API? That's possible too!
 
+<aside class="notice">
+  The majority of this information is set by the customer and can change without warning.
+  We will cache your request for you for optimal response times, but caching this information
+  yourself will need careful consideration.
+</aside>
+
 
 # Authentication
 
@@ -83,7 +89,6 @@ curl "https://eola.co.uk/api/outlets/perranporth-surf-school"
     "name": "not_set"
   },
   "address": {
-    "id": 434,
     "street_name": "19 St. Piran’s Road",
     "city": "Perranporth",
     "country": "GB",
@@ -103,18 +108,57 @@ This endpoint retrieves the information for a given outlet.
 
 `GET https://eola.co.uk/api/outlets/perranporth-surf-school`
 
-
-### Response notes
-Field | Note
---------- | ------- | -----------
-description | Rich text field.
-cancellation_policy  |  When the `name` value is `custom`, then `custom_text` fields will also be sent. These will be in rich text.
-
-<aside class="warning">
-  The majority of this information is set by the customer and can change without warning.
-  We will cache your request for you for optimal response times, but caching this information
-  yourself will need careful consideration.
+<aside class="notice">
+  When the <code>cancellation_policy.name</code> value is <code>custom</code>, then <code>custom_text</code> fields will also be sent. These will be in rich text.
 </aside>
+
+## Get all outlets
+
+```shell
+curl "https://eola.co.uk/api/outlets"
+  -H "Authorization: your_api_key"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "description": null,
+    "updated_at": "2018-10-25T12:32:34.678Z",
+    "slug": "perranporth-surf-school",
+    "minimum_notice_hrs": 24,
+    "link_to_site": "https://www.perranporthsurfschool.co.uk",
+    "phone_number": "+447974550823",
+    "child_age": 16,
+    "default_currency": "gbp",
+    "profile_picture": {
+      ...
+    },
+    "cancellation_policy": {
+      "name": "not_set"
+    },
+    "address": {
+      ...
+    }
+  },
+  ...
+]
+```
+
+This endpoint retrieves the information for a given outlet.
+
+### HTTP Request
+
+`GET https://eola.co.uk/api/outlets`
+
+
+### Request options
+Option | Default | Description
+--------- | ------- | -----------
+bookable_only | false | Only return the outlets which have bookable time slots available.
+
+
 
 <!-- ## Get a Specific Kitten
 
