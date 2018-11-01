@@ -16,7 +16,7 @@ search: true
 # Introduction
 
 Welcome to the eola API!
-This API will allow you to integrate with eola and the businesses busing eola.
+This API will allow you to integrate with eola and the businesses using eola.
 You'll be able to get the latest business, time slot and booking information.
 Looking to make bookings entirely via the API? That's possible too!
 
